@@ -56,6 +56,7 @@ public class User {
         boolean latinCharB = latinCharMatcher.find();
 
         boolean isCorrect = !(specialCharPatternB || firstAndLastCharB || latinCharB);
+        if(name.length() <=1) isCorrect = false;
 
         return isCorrect;
 
