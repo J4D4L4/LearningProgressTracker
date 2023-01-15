@@ -6,6 +6,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -52,6 +54,33 @@ public class CommandTest {
         boolean actualInput = addStudent.checkCorrectInput(first,second, third);
         boolean exprected = false;
         assertEquals(actualInput,exprected);
+    }
+
+    @Test
+    public void testAddPoints(){
+        UserList userList = new UserList();
+        AddPoints addPonts = new AddPoints();
+        User user1 = new User("asd","asd","asd@asd.de");
+        User user2 = new User("asd","asd","user2@asd.de");
+        userList.listOfUsers.put(user1.hashCode(),user1);
+        userList.listOfUsers.put(user2.hashCode(),user2);
+
+
+        //ByteArrayInputStream in = new ByteArrayInputStream("10 1 2 3 4 5\n".getBytes());
+        //System.setIn(in);
+        String data = "10 1 2 3 4 \r\n";
+        InputStream stdin = System.in;
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        Scanner scanner = new Scanner(System.in);
+        String input[] = scanner.nextLine().split(" ");
+        addPonts.readPoints(userList, input);
+
+        int isDB = userList.listOfUsers.get(10).dBPoints.get(0);
+        int expectedDB = 3;
+
+        assertEquals(expectedDB,isDB);
+
+
     }
 
 }

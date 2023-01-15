@@ -1,4 +1,6 @@
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,6 +9,10 @@ public class User {
     String firstName;
     String lastName;
     String eMail;
+    List<Integer> javaPoints = new ArrayList<Integer>();
+    List<Integer> dSAPoints = new ArrayList<Integer>();
+    List<Integer> dBPoints = new ArrayList<Integer>();
+    List<Integer> springPoints = new ArrayList<Integer>();
 
     User(String firstName, String lastName, String eMail){
 
@@ -68,7 +74,7 @@ public class User {
     public int hashCode() {
         int hash =0;
         for (int i =0; i< this.eMail.length();i++)
-            hash += eMail.charAt(i)%5;
+            hash += (int)eMail.charAt(i)%27;
         return hash;
     }
 

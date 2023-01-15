@@ -129,9 +129,96 @@ class ListC extends Command {
     }
     void mainFunction(UserList userList) {
         System.out.println("Students:");
-        for(var student : userList.listOfUsers.entrySet()){
-            System.out.println(student.getKey());
+        if (userList.listOfUsers.size()!=0) {
+            for (var student : userList.listOfUsers.entrySet()) {
+                System.out.println(student.getKey());
+            }
         }
+        else System.out.println("No students found");
     }
 }
 
+class AddPoints extends Command {
+
+    AddPoints() {
+        super("add points");
+    }
+    void mainFunction(UserList userList) {
+        System.out.println("Enter an id and points or 'back' to return");
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            String input[] = scanner.nextLine().split(" ");
+            if (input[0].equals("back")) break;
+            readPoints(userList,input);
+        }
+    }
+
+    public void readPoints(UserList userList, String[] input){
+        Scanner scanner = new Scanner(System.in);
+        //String input[] = scanner.nextLine().split(" ");
+        if (userList.listOfUsers.get(Integer.parseInt(input[0]))!=null && input.length == 5){
+            try {
+                int java = Integer.parseInt(input[1]);
+                int dsa = Integer.parseInt(input[2]);
+                int db = Integer.parseInt(input[3]);
+                int spring = Integer.parseInt(input[4]);
+                if(java<0 || dsa < 0 || db<0 ||spring<0) throw new NumberFormatException();
+
+                User student = userList.listOfUsers.get(Integer.parseInt(input[0]));
+                student.javaPoints.add(java);
+                student.dSAPoints.add(dsa);
+                student.dBPoints.add(db);
+                student.springPoints.add(spring);
+                System.out.println("Points updated.");
+
+            }
+            catch (NumberFormatException e){
+                System.out.println("Incorrect points format.");
+            }
+
+        }
+        else if(userList.listOfUsers.get(Integer.parseInt(input[0]))==null) System.out.printf("No student is found for id=%D",input[0]);
+
+    }
+}
+
+class Find extends Command {
+    Find() {
+        super("find");
+    }
+    void mainFunction(UserList userList) {
+        System.out.println("Enter an id or 'back' to return");
+        findUser(userList);
+
+    }
+
+    public void findUser(UserList userList){
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            String input = scanner.nextLine();
+            if(input.equals("back")) break;
+            try {
+                if (userList.listOfUsers.get(Integer.parseInt(input)) != null) {
+                    User student = userList.listOfUsers.get(Integer.parseInt(input));
+                    if(student.javaPoints.get(0) != null) {
+                        int java = student.javaPoints.get(0);
+                        int dsa = student.dSAPoints.get(0);
+                        int db = student.dBPoints.get(0);
+                        int spring = student.springPoints.get(0);
+                        System.out.printf("Java=%d; DSA=%d; Databases=%d; Spring=%d", java, dsa, db, spring);
+                    }
+                    else {
+                        int java = 0;
+                        int dsa = 0;
+                        int db = 0;
+                        int spring = 0;
+                    }
+                }
+            } catch (NumberFormatException e) {
+
+            }
+        }
+    }
+
+}
