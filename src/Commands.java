@@ -2,7 +2,9 @@
 
 public enum Commands {
     EXIT("exit", new Exit()),
-    ADDSTUDENT("add students", new AddStudent());
+    ADDSTUDENT("add students", new AddStudent()),
+    LIST("list", new ListC())
+    ;
 
     String strCommand;
     Command command;

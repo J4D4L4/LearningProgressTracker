@@ -93,6 +93,8 @@ class AddStudent extends Command {
 
     }
 
+
+
     void mainFunction(UserList userList) {
         boolean back = false;
         User userWorker = new User();
@@ -109,10 +111,26 @@ class AddStudent extends Command {
                 String lastName = userWorker.getLastName(input);
                 String eMail = input[input.length - 1];
                 User createdUser = new User(firstName, lastName, eMail);
-                userList.listOfUsers.add(createdUser);
-                System.out.println("The student has been added.");
-                usersAdded +=1;
+                if(!userList.eMailAlreadyTaken(createdUser)) {
+                    userList.listOfUsers.put(createdUser.hashCode(), createdUser);
+                    System.out.println("The student has been added.");
+                    usersAdded += 1;
+                }
+                else System.out.println("No students found");
             }
+        }
+    }
+}
+
+class ListC extends Command {
+
+    ListC() {
+        super("list");
+    }
+    void mainFunction(UserList userList) {
+        System.out.println("Students:");
+        for(var student : userList.listOfUsers.entrySet()){
+            System.out.println(student.getKey());
         }
     }
 }

@@ -3,9 +3,9 @@
 import java.util.Scanner;
 
 public class CommandLineInterface {
-
+    UserList userList;
     public CommandLineInterface(){
-
+        this.userList = new UserList();
     }
 
     public void welcomeUser(){
@@ -15,11 +15,11 @@ public class CommandLineInterface {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         boolean foundCommand = false;
-        UserList userList = new UserList();
+
         //Itterate over enums to find command
         for (Commands c: Commands.values()) {
             if (c.strCommand.equals(input)){
-                c.command.mainFunction(userList);
+                c.command.mainFunction(this.userList);
                 foundCommand= true;
             }
         }

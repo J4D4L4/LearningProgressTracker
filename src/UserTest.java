@@ -68,21 +68,49 @@ public class UserTest {
 
 
     }
-
+    @Test
     public void testGetLastname(){
         User testUser = new User("test", "test", "test");
-        String[] in = {"Not","Last"," Name", " not"};
+        String[] in = {"Not","Last","Name", " not"};
         String actualStatus = testUser.getLastName(in);
         String expectedStatus = "Last Name";
 
         Assertions.assertEquals(actualStatus,expectedStatus);
 
-        String[] in2 = {"Not","not"};
+        String[] in2 = {"Not","","not"};
         actualStatus = testUser.getLastName(in2);
         expectedStatus = "";
 
         Assertions.assertEquals(expectedStatus, actualStatus);
 
 
+    }
+
+    @Test public void testIsSame(){
+        User user1 = new User("da", "da", "asd@asd.de");
+        User user2 = new User("dsasd", "asdsfd", "asd@asd.de");
+        boolean actualStatus = user1.equals(user2);
+        boolean expectedStatus = true;
+    }
+
+    @Test public void testNotSame(){
+        User user1 = new User("da", "da", "asd@asd.de");
+        User user2 = new User("dsasd", "asdsfd", "asdasd@asd.de");
+        boolean actualStatus = user1.equals(user2);
+        boolean expectedStatus = false;
+    }
+
+    @Test public void testHashSame(){
+        User user1 = new User("da", "da", "asd@asd.de");
+        User user2 = new User("dsasd", "asdsfd", "asd@asd.de");
+        boolean actualStatus = user1.hashCode()==user2.hashCode();
+        boolean expectedStatus = true;
+    }
+
+    @Test public void testHashNotSame(){
+        User user1 = new User("da", "da", "asd@asd.de");
+        User user2 = new User("dsasd", "asdsfd", "asdsad@asd.de");
+        boolean actualStatus = user1.hashCode()==user2.hashCode();
+        boolean expectedStatus = false;
     }
 }

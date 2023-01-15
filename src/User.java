@@ -64,4 +64,29 @@ public class User {
         return lastName;
     }
 
+    @Override
+    public int hashCode() {
+        int hash =0;
+        for (int i =0; i< this.eMail.length();i++)
+            hash += eMail.charAt(i)%5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        /* Check this and other refer to the same object */
+        if (this == other) {
+            return true;
+        }
+
+        /* Check other is Person and not null */
+        if (!(other instanceof User)) {
+            return false;
+        }
+
+        User person = (User) other;
+
+        /* Compare all required fields */
+        return eMail == person.eMail;
+    }
 }

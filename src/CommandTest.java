@@ -2,6 +2,9 @@
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import java.io.ByteArrayInputStream;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -38,19 +41,17 @@ public class CommandTest {
         boolean exprected = true;
         assertEquals(actualInput,exprected);
 
-        actualInput = addStudent.checkCorrectInput("tru312e", "true asd", "true@email.cd");
-        exprected = false;
-        assertEquals(actualInput,exprected);
 
-        actualInput = addStudent.checkCorrectInput("true", "true 123 asd", "true@email.cd");
-        exprected = false;
-        assertEquals(actualInput,exprected);
-
-        actualInput = addStudent.checkCorrectInput("tru312e", "true asd", "true@emailcd");
-        exprected = false;
-        assertEquals(actualInput,exprected);
 
     }
+    @ParameterizedTest
+    @CsvSource({ "tru312e, rue asd, true@email.cd", "true, rue 123 asd, true@email.cd","true, rue asd, true@emailcd" })
+    public void  testCheckFalsetUserData(String first, String second, String third){
+        AddStudent addStudent = new AddStudent();
 
+        boolean actualInput = addStudent.checkCorrectInput(first,second, third);
+        boolean exprected = false;
+        assertEquals(actualInput,exprected);
+    }
 
 }
