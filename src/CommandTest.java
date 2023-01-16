@@ -1,5 +1,3 @@
-
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -68,14 +66,14 @@ public class CommandTest {
 
         //ByteArrayInputStream in = new ByteArrayInputStream("10 1 2 3 4 5\n".getBytes());
         //System.setIn(in);
-        String data = "10 1 2 3 4 \r\n";
+        String data = "152 1 2 3 4 \r\n";
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         Scanner scanner = new Scanner(System.in);
         String input[] = scanner.nextLine().split(" ");
         addPonts.readPoints(userList, input);
 
-        int isDB = userList.listOfUsers.get(10).dBPoints.get(0);
+        int isDB = userList.listOfUsers.get(152).dBPoints;
         int expectedDB = 3;
 
         assertEquals(expectedDB,isDB);
@@ -83,4 +81,31 @@ public class CommandTest {
 
     }
 
+
+    @Test
+    public void testAddWrongPoints(){
+        UserList userList = new UserList();
+        AddPoints addPonts = new AddPoints();
+        User user1 = new User("asd","asd","asd@asd.de");
+        User user2 = new User("asd","asd","user2@asd.de");
+        userList.listOfUsers.put(user1.hashCode(),user1);
+        userList.listOfUsers.put(user2.hashCode(),user2);
+
+
+        //ByteArrayInputStream in = new ByteArrayInputStream("10 1 2 3 4 5\n".getBytes());
+        //System.setIn(in);
+        String data = "152 1.0 2,0 3.0 4,0 \r\n";
+        InputStream stdin = System.in;
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        Scanner scanner = new Scanner(System.in);
+        String input[] = scanner.nextLine().split(" ");
+        addPonts.readPoints(userList, input);
+
+        int isDB = userList.listOfUsers.get(152).dBPoints;
+        int expectedDB = 3;
+
+        assertEquals(expectedDB,isDB);
+
+
+    }
 }

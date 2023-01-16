@@ -1,5 +1,3 @@
-
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -55,7 +53,7 @@ public class UserTest {
     }
 
     @ParameterizedTest
-    @CsvSource({ "asd", "hjgds", "test", "Asfl" })
+    @CsvSource({ "asd", "hjgds", "Jean-Claude", "Asfl" })
     public void testGoodFirstName(String firstName){
         User testUser = new User();
         boolean actualStatus = testUser.checkFirstName(firstName);
@@ -64,10 +62,29 @@ public class UserTest {
         Assertions.assertEquals(actualStatus,expectedStatus);
     }
     @ParameterizedTest
-    @CsvSource({ "asd23", "#hjgds", "/'test", "As-fl", "A" })
+    @CsvSource({ "asd23", "#hjgds", "/'test", "As-fl45", "A" })
     public void testBadFirstName(String firstName){
         User testUser = new User();
         boolean actualStatus = testUser.checkFirstName(firstName);
+        boolean expectedStatus = false;
+
+        Assertions.assertEquals(expectedStatus, actualStatus);
+    }
+
+    @ParameterizedTest
+    @CsvSource({ "Smith ", "Doolittle ", "test", "O'Connor" })
+    public void testGoodLastName(String firstName){
+        User testUser = new User();
+        boolean actualStatus = testUser.checkLastName(firstName);
+        boolean expectedStatus = true;
+
+        Assertions.assertEquals(actualStatus,expectedStatus);
+    }
+    @ParameterizedTest
+    @CsvSource({ "asd23", "#hjgds", "/'test", "Asa487fl", "51666" })
+    public void testBadLastName(String firstName){
+        User testUser = new User();
+        boolean actualStatus = testUser.checkLastName(firstName);
         boolean expectedStatus = false;
 
         Assertions.assertEquals(expectedStatus, actualStatus);

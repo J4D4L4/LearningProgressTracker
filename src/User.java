@@ -1,6 +1,3 @@
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,16 +6,20 @@ public class User {
     String firstName;
     String lastName;
     String eMail;
-    List<Integer> javaPoints = new ArrayList<Integer>();
-    List<Integer> dSAPoints = new ArrayList<Integer>();
-    List<Integer> dBPoints = new ArrayList<Integer>();
-    List<Integer> springPoints = new ArrayList<Integer>();
+    Integer javaPoints;
+    Integer dSAPoints;
+    Integer dBPoints;
+    Integer springPoints;
 
     User(String firstName, String lastName, String eMail){
 
         this.firstName = firstName;
         this.lastName = lastName;
         this.eMail = eMail;
+        this.javaPoints = 0;
+        this.dSAPoints = 0;
+        this.dBPoints = 0;
+        this.springPoints = 0;
 
     }
     User(){
@@ -26,11 +27,18 @@ public class User {
         this.firstName = "Empty";
         this.lastName = "Empty";
         this.eMail = "Empty";
+        this.javaPoints = 0;
+        this.dSAPoints = 0;
+        this.dBPoints = 0;
+        this.springPoints = 0;
+
 
     }
     boolean checkEMail(String eMail) {
         //Email pattern : Starts with word then @ then word than . then word
-        String patternStr = "\\w+@\\w+\\.\\w";
+        String patternStr = "^[^@\\s]+@[^@\\s\\.]+\\.[^@\\.\\s]+$";
+
+
         Pattern pattern = Pattern.compile(patternStr);
         Matcher matcher = pattern.matcher(eMail);
         return matcher.find();
@@ -74,7 +82,7 @@ public class User {
     }
 
     boolean checkFirstName (String name){
-        String specialChar = "[~!@#$%^&*()_+{}\\[\\]:;,-.<>/?']|[0-9]";
+        String specialChar = "[~!@#$%^&*()_+{}\\[\\]:;,.<>/?]|[0-9]|(-'|'-|--|'')";
         String latinChar = "(?=\\pL)(?![a-zA-Z])";
         String firstAndLastChar = "^-|^'|-$|'$";
         String[] toCheckArray = {specialChar,latinChar,firstAndLastChar};
@@ -82,7 +90,7 @@ public class User {
         return returnBool;
     }
     boolean checkLastName (String name){
-        String specialChar = "[~!@#$%^&*()_+'{}\\[\\]:;,.<>/?]|\\d";
+        String specialChar = "[~!@#$%^&*()_+{}\\[\\]:;,.<>/?]|\\d|(-'|'-|--|'')";
         String latinChar = "(?=\\pL)(?![a-zA-Z])";
         String firstAndLastChar = "^-|^'|-$|'$";
         String[] toCheckArray = {specialChar,latinChar,firstAndLastChar};

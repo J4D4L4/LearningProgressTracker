@@ -1,8 +1,8 @@
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public abstract class Command {
     String strCommand;
@@ -14,7 +14,14 @@ public abstract class Command {
         return strCommand;
     }
     abstract void mainFunction(UserList userList);
+    private Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
+    public boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        return pattern.matcher(strNum).matches();
+    }
 }
 
 class Exit extends Command {
@@ -81,11 +88,11 @@ class AddStudent extends Command {
             System.out.println("Incorrect first name.");
             correctInput = false;
         }
-        if(!user.checkLastName(lastName)) {
+        else if(!user.checkLastName(lastName)) {
             System.out.println("Incorrect last name.");
             correctInput = false;
         }
-        if(!user.checkEMail(eMail)) {
+        else if(!user.checkEMail(eMail)) {
             System.out.println("Incorrect email.");
             correctInput = false;
         }
@@ -116,7 +123,7 @@ class AddStudent extends Command {
                     System.out.println("The student has been added.");
                     usersAdded += 1;
                 }
-                else System.out.println("No students found");
+                else System.out.println("This email is already taken.");
             }
         }
     }
@@ -128,8 +135,9 @@ class ListC extends Command {
         super("list");
     }
     void mainFunction(UserList userList) {
-        System.out.println("Students:");
+
         if (userList.listOfUsers.size()!=0) {
+            System.out.println("Students:");
             for (var student : userList.listOfUsers.entrySet()) {
                 System.out.println(student.getKey());
             }
@@ -156,28 +164,42 @@ class AddPoints extends Command {
     public void readPoints(UserList userList, String[] input){
         Scanner scanner = new Scanner(System.in);
         //String input[] = scanner.nextLine().split(" ");
-        if (userList.listOfUsers.get(Integer.parseInt(input[0]))!=null && input.length == 5){
+        try {
+            User user = userList.listOfUsers.get(Integer.parseInt(input[0]));
+        }
+        catch (NumberFormatException f){
+                System.out.printf("No student is found for id=%s", input[0]);
+        }
             try {
-                int java = Integer.parseInt(input[1]);
-                int dsa = Integer.parseInt(input[2]);
-                int db = Integer.parseInt(input[3]);
-                int spring = Integer.parseInt(input[4]);
-                if(java<0 || dsa < 0 || db<0 ||spring<0) throw new NumberFormatException();
+                if (userList.listOfUsers.get(Integer.parseInt(input[0])) != null && input.length == 5) {
+                    if(this.isNumeric(input[1]) && this.isNumeric(input[2]) && this.isNumeric(input[3]) && this.isNumeric(input[4])) {
+                        int java = Integer.parseInt(input[1]);
+                        int dsa = Integer.parseInt(input[2]);
+                        int db = Integer.parseInt(input[3]);
+                        int spring = Integer.parseInt(input[4]);
+                        if (java < 0 || dsa < 0 || db < 0 || spring < 0) throw new NumberFormatException();
 
-                User student = userList.listOfUsers.get(Integer.parseInt(input[0]));
-                student.javaPoints.add(java);
-                student.dSAPoints.add(dsa);
-                student.dBPoints.add(db);
-                student.springPoints.add(spring);
-                System.out.println("Points updated.");
+                        User student = userList.listOfUsers.get(Integer.parseInt(input[0]));
+                        student.javaPoints += (java);
+                        student.dSAPoints += (dsa);
+                        student.dBPoints += (db);
+                        student.springPoints += (spring);
+                        System.out.println("Points updated.");
+                    } else  {
+                        System.out.println("Incorrect points format.");
+                    }
+                } else if (userList.listOfUsers.get(Integer.parseInt(input[0])) == null)
+                    System.out.printf("No student is found for id=%D", input[0]);
+                else System.out.println("Incorrect points format.");
 
-            }
-            catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("Incorrect points format.");
             }
 
-        }
-        else if(userList.listOfUsers.get(Integer.parseInt(input[0]))==null) System.out.printf("No student is found for id=%D",input[0]);
+
+
+
+
 
     }
 }
@@ -201,24 +223,21 @@ class Find extends Command {
             try {
                 if (userList.listOfUsers.get(Integer.parseInt(input)) != null) {
                     User student = userList.listOfUsers.get(Integer.parseInt(input));
-                    if(student.javaPoints.get(0) != null) {
-                        int java = student.javaPoints.get(0);
-                        int dsa = student.dSAPoints.get(0);
-                        int db = student.dBPoints.get(0);
-                        int spring = student.springPoints.get(0);
-                        System.out.printf("Java=%d; DSA=%d; Databases=%d; Spring=%d", java, dsa, db, spring);
-                    }
-                    else {
-                        int java = 0;
-                        int dsa = 0;
-                        int db = 0;
-                        int spring = 0;
-                    }
+
+                    int java = student.javaPoints;
+                    int dsa = student.dSAPoints;
+                    int db = student.dBPoints;
+                    int spring = student.springPoints;
+                    System.out.printf("%s points: Java=%d; DSA=%d; Databases=%d; Spring=%d%n",input, java, dsa, db, spring);
+
+
                 }
             } catch (NumberFormatException e) {
 
             }
         }
     }
+
+
 
 }

@@ -1,5 +1,3 @@
-
-
 public enum Commands {
     EXIT("exit", new Exit()),
     ADDSTUDENT("add students", new AddStudent()),
