@@ -2,6 +2,8 @@
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 
 public class UserTest {
@@ -50,6 +52,25 @@ public class UserTest {
 
         Assertions.assertEquals(expectedStatus, actualStatus);
 
+    }
+
+    @ParameterizedTest
+    @CsvSource({ "asd", "hjgds", "test", "Asfl" })
+    public void testGoodFirstName(String firstName){
+        User testUser = new User();
+        boolean actualStatus = testUser.checkFirstName(firstName);
+        boolean expectedStatus = true;
+
+        Assertions.assertEquals(actualStatus,expectedStatus);
+    }
+    @ParameterizedTest
+    @CsvSource({ "asd23", "#hjgds", "/'test", "As-fl", "A" })
+    public void testBadFirstName(String firstName){
+        User testUser = new User();
+        boolean actualStatus = testUser.checkFirstName(firstName);
+        boolean expectedStatus = false;
+
+        Assertions.assertEquals(expectedStatus, actualStatus);
     }
 
     @Test

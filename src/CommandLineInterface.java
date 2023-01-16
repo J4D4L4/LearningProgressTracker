@@ -24,6 +24,7 @@ public class CommandLineInterface {
             }
         }
         if(input.isBlank()&&foundCommand == false) System.out.println("No input.");
+        else if(foundCommand == false && input.equals("back")) System.out.println("Enter 'exit' to exit the program.");
         else if(foundCommand == false) System.out.println("Error: unknown command!");
         return foundCommand;
     }

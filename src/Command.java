@@ -77,11 +77,11 @@ class AddStudent extends Command {
     boolean checkCorrectInput(String firstName, String lastName, String eMail){
         boolean correctInput = true;
         User user = new User("","","");
-        if(!user.checkName(firstName)) {
+        if(!user.checkFirstName(firstName)) {
             System.out.println("Incorrect first name.");
             correctInput = false;
         }
-        if(!user.checkName(lastName)) {
+        if(!user.checkLastName(lastName)) {
             System.out.println("Incorrect last name.");
             correctInput = false;
         }

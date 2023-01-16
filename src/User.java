@@ -36,7 +36,7 @@ public class User {
         return matcher.find();
 
     }
-
+    //obsolete: Implemented new functions for each type
     boolean checkName(String name) {
         //Email pattern : Starts with word then @ then word than . then word
         String specialChar = "[~!@#$%^&*()_+{}\\[\\]:;,.<>/?]|\\d";
@@ -62,6 +62,33 @@ public class User {
 
     }
 
+    boolean checkRegRules(String[] in, String toCheck){
+        boolean returnBool = false;
+        for(int i =0; i<in.length; i++){
+            Pattern inPattern = Pattern.compile(in[i]);
+            Matcher inMatcher = inPattern.matcher(toCheck);
+            if(inMatcher.find()) returnBool = true;
+        }
+        //returns true if no match to rule
+        return !returnBool;
+    }
+
+    boolean checkFirstName (String name){
+        String specialChar = "[~!@#$%^&*()_+{}\\[\\]:;,-.<>/?']|[0-9]";
+        String latinChar = "(?=\\pL)(?![a-zA-Z])";
+        String firstAndLastChar = "^-|^'|-$|'$";
+        String[] toCheckArray = {specialChar,latinChar,firstAndLastChar};
+        boolean returnBool = (checkRegRules(toCheckArray, name) && name.length()!=1);
+        return returnBool;
+    }
+    boolean checkLastName (String name){
+        String specialChar = "[~!@#$%^&*()_+'{}\\[\\]:;,.<>/?]|\\d";
+        String latinChar = "(?=\\pL)(?![a-zA-Z])";
+        String firstAndLastChar = "^-|^'|-$|'$";
+        String[] toCheckArray = {specialChar,latinChar,firstAndLastChar};
+        boolean returnBool = (checkRegRules(toCheckArray, name) && name.length()!=1);
+        return returnBool;
+    }
     String getLastName(String[] in){
         String lastName="";
         for (int i =1; i< in.length-1;i++){
