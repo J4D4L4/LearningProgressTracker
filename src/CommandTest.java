@@ -73,7 +73,7 @@ public class CommandTest {
         String input[] = scanner.nextLine().split(" ");
         addPonts.readPoints(userList, input);
 
-        int isDB = userList.listOfUsers.get(152).dBPoints;
+        int isDB = userList.listOfUsers.get(152).getTotalDB();
         int expectedDB = 3;
 
         assertEquals(expectedDB,isDB);
@@ -94,14 +94,14 @@ public class CommandTest {
 
         //ByteArrayInputStream in = new ByteArrayInputStream("10 1 2 3 4 5\n".getBytes());
         //System.setIn(in);
-        String data = "152 1.0 2,0 3.0 4,0 \r\n";
+        String data = "152 1 2 3 4 \r\n";
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         Scanner scanner = new Scanner(System.in);
         String input[] = scanner.nextLine().split(" ");
         addPonts.readPoints(userList, input);
 
-        int isDB = userList.listOfUsers.get(152).dBPoints;
+        int isDB = userList.listOfUsers.get(152).getTotalDB();
         int expectedDB = 3;
 
         assertEquals(expectedDB,isDB);

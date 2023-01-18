@@ -9,4 +9,10 @@ public class TesterTest {
     public void testHashTable(){
         test.hashMap();
     }
+
+
+    @Test
+    public void compareNumbers(){
+        test.comparingNumber();
+    }
 }

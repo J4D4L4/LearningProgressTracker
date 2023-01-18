@@ -3,7 +3,8 @@ public enum Commands {
     ADDSTUDENT("add students", new AddStudent()),
     LIST("list", new ListC()),
     ADDPOINTS("add points", new AddPoints()),
-    FIND("find", new Find())
+    FIND("find", new Find()),
+    STATISTICS("statistics", new Statistics())
     ;
 
     String strCommand;

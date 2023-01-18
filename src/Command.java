@@ -180,10 +180,10 @@ class AddPoints extends Command {
                         if (java < 0 || dsa < 0 || db < 0 || spring < 0) throw new NumberFormatException();
 
                         User student = userList.listOfUsers.get(Integer.parseInt(input[0]));
-                        student.javaPoints += (java);
-                        student.dSAPoints += (dsa);
-                        student.dBPoints += (db);
-                        student.springPoints += (spring);
+                        if (java > 0) student.javaPoints.add(java);
+                        if (java > 0) student.dSAPoints.add(dsa);
+                        if (java > 0)student.dBPoints.add(db);
+                        if (java > 0) student.springPoints.add(spring);
                         System.out.println("Points updated.");
                     } else  {
                         System.out.println("Incorrect points format.");
@@ -224,10 +224,10 @@ class Find extends Command {
                 if (userList.listOfUsers.get(Integer.parseInt(input)) != null) {
                     User student = userList.listOfUsers.get(Integer.parseInt(input));
 
-                    int java = student.javaPoints;
-                    int dsa = student.dSAPoints;
-                    int db = student.dBPoints;
-                    int spring = student.springPoints;
+                    int java = student.getTotalJava();
+                    int dsa = student.getTotalDSA();
+                    int db = student.getTotalDB();
+                    int spring = student.getTotalSpring();
                     System.out.printf("%s points: Java=%d; DSA=%d; Databases=%d; Spring=%d%n",input, java, dsa, db, spring);
 
 
@@ -238,6 +238,64 @@ class Find extends Command {
         }
     }
 
+
+
+}
+
+
+class Statistics extends Command {
+    Statistics() {
+        super("statistics");
+    }
+    void mainFunction(UserList userList) {
+        String mPopular = userList.getMostPopular();
+        String lPopular = userList.getLeastPopular();
+        String hActivity = userList.getHighestActivity();
+        String lActivity = userList.getLowesttActivity();
+        String easiest = userList.getEasiest();
+        String hardest = userList.getHardest();
+        if(mPopular == lPopular){
+            mPopular= "n/a";
+            lPopular = "n/a";
+        }
+        if(hActivity==lActivity){
+            hActivity = "n/a";
+            lActivity = "n/a";
+        }
+
+        if(easiest==hardest){
+            easiest = "n/a";
+            hardest ="n/a";
+        }
+
+        System.out.println("Type the name of a course to see details or 'back' to quit:");
+        System.out.printf("Most popular: %S%n",userList.getMostPopular());
+        System.out.printf("Least popular: %S%n",userList.getLeastPopular());
+        System.out.printf("Highest activity: %S%n",userList.getHighestActivity());
+        System.out.printf("Lowest activity: %S%n",userList.getLowesttActivity());
+        System.out.printf("Easiest course: %S%n",userList.getEasiest());
+        System.out.printf("Hardest course: %S%n",userList.getHardest());
+
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            String in = scanner.nextLine();
+            if(in.equals("java")||in.equals("dsa")||in.equals("db")||in.equals("spring")){
+                getCourseStat(userList,in);
+            }
+            else if(in.equals("back")) break;
+            else System.out.println("Unknown course.");
+        }
+
+
+    }
+    public void getCourseStat(UserList userList, String in){
+        List<UserInTopList> statisticList = userList.getCourseStatistics(in);
+        System.out.println(in);
+        System.out.println("id     points completed");
+        for(UserInTopList u : statisticList){
+            System.out.println(u.id+" "+u.points+"    "+u.completion+"%");
+        }
+    }
 
 
 }

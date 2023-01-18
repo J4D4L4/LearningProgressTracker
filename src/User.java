@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -6,20 +9,17 @@ public class User {
     String firstName;
     String lastName;
     String eMail;
-    Integer javaPoints;
-    Integer dSAPoints;
-    Integer dBPoints;
-    Integer springPoints;
+    List<Integer> javaPoints = new ArrayList<>();
+    List<Integer> dSAPoints= new ArrayList<>();
+    List<Integer> dBPoints = new ArrayList<>();
+    List<Integer> springPoints = new ArrayList<>();
 
     User(String firstName, String lastName, String eMail){
 
         this.firstName = firstName;
         this.lastName = lastName;
         this.eMail = eMail;
-        this.javaPoints = 0;
-        this.dSAPoints = 0;
-        this.dBPoints = 0;
-        this.springPoints = 0;
+
 
     }
     User(){
@@ -27,10 +27,7 @@ public class User {
         this.firstName = "Empty";
         this.lastName = "Empty";
         this.eMail = "Empty";
-        this.javaPoints = 0;
-        this.dSAPoints = 0;
-        this.dBPoints = 0;
-        this.springPoints = 0;
+
 
 
     }
@@ -130,5 +127,64 @@ public class User {
 
         /* Compare all required fields */
         return eMail == person.eMail;
+    }
+
+    public int getTotalJava(){
+        int sum = 0;
+        for (Integer i: javaPoints) {
+            sum+=i;
+        }
+        return sum;
+    }
+    public int getTotalDB(){
+        int sum = 0;
+        for (Integer i: dBPoints) {
+            sum+=i;
+        }
+        return sum;
+    }
+
+    public int getTotalDSA(){
+        int sum = 0;
+        for (Integer i: dSAPoints) {
+            sum+=i;
+        }
+        return sum;
+    }
+
+    public int getTotalSpring(){
+        int sum = 0;
+        for (Integer i: springPoints) {
+            sum+=i;
+        }
+        return sum;
+    }
+
+    public double avg(List<Integer> a){
+        int sum = 0;
+        for (Integer i: a) {
+            sum+=i;
+        }
+        if(a.size()!=0)return sum/a.size();
+        else return 0;
+    }
+
+}
+class UserInTopList{
+    Integer id;
+    Integer points;
+    String completion;
+
+    UserInTopList(int id, int points, String completion){
+        this.id = id;
+        this.points = points;
+        this.completion = completion;
+    }
+}
+class UserInTopListComparator implements Comparator<UserInTopList> {
+
+    @Override
+    public int compare(UserInTopList userInTopList, UserInTopList t1) {
+        return (userInTopList.points.compareTo(t1.points) == 0) ? userInTopList.id.compareTo(t1.id) : userInTopList.points.compareTo(t1.points);
     }
 }
