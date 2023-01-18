@@ -1,12 +1,15 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 public class UserList {
     //List<User> listOfUsers = new ArrayList<User>();
     LinkedHashMap<Integer, User> listOfUsers = new LinkedHashMap<>();
     Integer totalJava = 600;
-    Integer totalDB =475;
+    Integer totalDB =480;
     Integer totalDSA = 400;
     Integer totalSpring=550;
 
@@ -30,7 +33,7 @@ public class UserList {
             springActivity += u.getValue().springPoints.size();
         }
         activity.put("Java",javaActivity);
-        activity.put("DB",dbActivity);
+        activity.put("Databases",dbActivity);
         activity.put("DSA",dsaActivity);
         activity.put("Spring",springActivity);
         return activity;
@@ -50,7 +53,7 @@ public class UserList {
             if( u.getValue().springPoints.size()>0) springPopularity += 1;
         }
         popularity.put("Java",javaPopularity);
-        popularity.put("DB",dbPopularity);
+        popularity.put("Databases",dbPopularity);
         popularity.put("DSA",dsaPopularity);
         popularity.put("Spring",springPopularity);
         return popularity;
@@ -81,12 +84,12 @@ public class UserList {
                 dsaCounter++;
             }
             if( u.getValue().springPoints.size()>0) {
-                springAvg += u.getValue().avg(u.getValue().javaPoints);
+                springAvg += u.getValue().avg(u.getValue().springPoints);
                 springCounter++;
             }
         }
         avg.put("Java",javaAvg/javaCounter);
-        avg.put("DB",dbAvg/dbCounter);
+        avg.put("Databases",dbAvg/dbCounter);
         avg.put("DSA",dsaAvg/dsaCounter);
         avg.put("Spring",springAvg/springCounter);
         return avg;
@@ -169,6 +172,7 @@ public class UserList {
             }
         }
         if (lowestI == 0) lowsest ="n/a";
+        if (lowsest.equals(getMostPopular())) lowsest ="n/a";
         return lowsest;
     }
 
@@ -189,6 +193,7 @@ public class UserList {
             }
         }
         if (lowestI == 0) lowsest ="n/a";
+        if (lowsest.equals(getHighestActivity())) lowsest ="n/a";
         return lowsest;
     }
 
@@ -265,9 +270,9 @@ public class UserList {
                 BigDecimal factor = new BigDecimal((double)100 / totalJava);
                 for (var i : listOfUsers.entrySet()) {
                     BigDecimal totalJava = new BigDecimal(i.getValue().getTotalJava());
-                    bdRounded = factor.multiply(totalJava).setScale(2, RoundingMode.HALF_UP);
+                    bdRounded = factor.multiply(totalJava).setScale(1, RoundingMode.HALF_UP);
                     UserInTopList user = new UserInTopList(i.getKey(), i.getValue().getTotalJava(), bdRounded.toString());
-                    statisticList.add(user);
+                    if(i.getValue().getTotalJava()!=0)statisticList.add(user);
                 }
 
                 break;
@@ -275,29 +280,29 @@ public class UserList {
                 BigDecimal factorDSA = new BigDecimal((double)100 / totalDSA);
                 for (var i : listOfUsers.entrySet()) {
                     BigDecimal totalDSA = new BigDecimal(i.getValue().getTotalDSA());
-                    bdRounded = factorDSA.multiply(totalDSA).setScale(2, RoundingMode.HALF_UP);
+                    bdRounded = factorDSA.multiply(totalDSA).setScale(1, RoundingMode.HALF_UP);
                     UserInTopList user = new UserInTopList(i.getKey(), i.getValue().getTotalDSA(), bdRounded.toString());
-                    statisticList.add(user);
+                    if(i.getValue().getTotalDSA()!=0)statisticList.add(user);
                 }
 
                 break;
-            case "db":
+            case "databases":
                 BigDecimal factorDB = new BigDecimal((double)100 / totalDB);
                 for (var i : listOfUsers.entrySet()) {
                     BigDecimal totalDB = new BigDecimal(i.getValue().getTotalDB());
-                    bdRounded = factorDB.multiply(totalDB).setScale(2, RoundingMode.HALF_UP);
+                    bdRounded = factorDB.multiply(totalDB).setScale(1, RoundingMode.HALF_UP);
                     UserInTopList user = new UserInTopList(i.getKey(), i.getValue().getTotalDB(), bdRounded.toString());
-                    statisticList.add(user);
+                    if(i.getValue().getTotalDB()!=0)statisticList.add(user);
                 }
 
                 break;
             case "spring":
-                BigDecimal factorSpring = new BigDecimal((double)100 / totalDB);
+                BigDecimal factorSpring = new BigDecimal((double)100 / totalSpring);
                 for (var i : listOfUsers.entrySet()) {
                     BigDecimal totalSpring = new BigDecimal(i.getValue().getTotalSpring());
-                    bdRounded = factorSpring.multiply(totalSpring).setScale(2, RoundingMode.HALF_UP);
+                    bdRounded = factorSpring.multiply(totalSpring).setScale(1, RoundingMode.HALF_UP);
                     UserInTopList user = new UserInTopList(i.getKey(), i.getValue().getTotalSpring(), bdRounded.toString());
-                    statisticList.add(user);
+                    if(i.getValue().getTotalSpring()!=0)statisticList.add(user);
                 }
 
                 break;

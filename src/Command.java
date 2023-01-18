@@ -254,32 +254,32 @@ class Statistics extends Command {
         String lActivity = userList.getLowesttActivity();
         String easiest = userList.getEasiest();
         String hardest = userList.getHardest();
-        if(mPopular == lPopular){
+        if(mPopular.equals(lPopular)){
             mPopular= "n/a";
             lPopular = "n/a";
         }
-        if(hActivity==lActivity){
+        if(hActivity.equals(lActivity)){
             hActivity = "n/a";
             lActivity = "n/a";
         }
 
-        if(easiest==hardest){
+        if(easiest.equals(hardest)){
             easiest = "n/a";
             hardest ="n/a";
         }
 
         System.out.println("Type the name of a course to see details or 'back' to quit:");
-        System.out.printf("Most popular: %S%n",userList.getMostPopular());
-        System.out.printf("Least popular: %S%n",userList.getLeastPopular());
-        System.out.printf("Highest activity: %S%n",userList.getHighestActivity());
-        System.out.printf("Lowest activity: %S%n",userList.getLowesttActivity());
-        System.out.printf("Easiest course: %S%n",userList.getEasiest());
-        System.out.printf("Hardest course: %S%n",userList.getHardest());
+        System.out.printf("Most popular: %s%n",userList.getMostPopular());
+        System.out.printf("Least popular: %s%n",userList.getLeastPopular());
+        System.out.printf("Highest activity: %s%n",userList.getHighestActivity());
+        System.out.printf("Lowest activity: %s%n",userList.getLowesttActivity());
+        System.out.printf("Easiest course: %s%n",userList.getEasiest());
+        System.out.printf("Hardest course: %s%n",userList.getHardest());
 
         Scanner scanner = new Scanner(System.in);
         while(true){
-            String in = scanner.nextLine();
-            if(in.equals("java")||in.equals("dsa")||in.equals("db")||in.equals("spring")){
+            String in = scanner.nextLine().toLowerCase();
+            if(in.equals("java")||in.equals("dsa")||in.equals("databases")||in.equals("spring")){
                 getCourseStat(userList,in);
             }
             else if(in.equals("back")) break;
@@ -290,7 +290,7 @@ class Statistics extends Command {
     }
     public void getCourseStat(UserList userList, String in){
         List<UserInTopList> statisticList = userList.getCourseStatistics(in);
-        System.out.println(in);
+        System.out.println(in.substring(0,1).toUpperCase()+in.substring(1));
         System.out.println("id     points completed");
         for(UserInTopList u : statisticList){
             System.out.println(u.id+" "+u.points+"    "+u.completion+"%");

@@ -165,7 +165,7 @@ public class User {
         for (Integer i: a) {
             sum+=i;
         }
-        if(a.size()!=0)return sum/a.size();
+        if(a.size()!=0)return (double) sum/a.size();
         else return 0;
     }
 
@@ -185,6 +185,6 @@ class UserInTopListComparator implements Comparator<UserInTopList> {
 
     @Override
     public int compare(UserInTopList userInTopList, UserInTopList t1) {
-        return (userInTopList.points.compareTo(t1.points) == 0) ? userInTopList.id.compareTo(t1.id) : userInTopList.points.compareTo(t1.points);
+        return (userInTopList.points.compareTo(t1.points) == 0) ? userInTopList.id.compareTo(t1.id) : userInTopList.points.compareTo(t1.points)*-1;
     }
 }

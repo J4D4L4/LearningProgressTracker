@@ -39,10 +39,15 @@ public class CommandLineInterface {
         User user2 = new User("dsasd", "asdsfd", "asdasd@asd.de");
         User user3 = new User("dsasd", "asdsfd", "asgghjhjj@asd.de");
         User user4 = new User("dsasd", "asdsfd", "asgghjhjasgdsgj@asd.de");
-        addPoints1(user1,1);
+        /*addPoints1(user1,1);
         addPoints1(user2,2);
         addPoints1(user3,3);
         addPoints1(user4,0);
+        */
+         addPoints2(user1);
+        addPoints2(user2);
+        addPoints2(user3);
+        addPoints2(user4);
         userList.listOfUsers.put(user1.hashCode(),user1);
         System.out.println(user1.hashCode());
         userList.listOfUsers.put(user2.hashCode(),user2);
@@ -66,6 +71,12 @@ public class CommandLineInterface {
         for (int i =0; i<offset+3;i++){
             user.springPoints.add(i+offset);
         }
+    }
+    public void addPoints2(User user){
+            user.javaPoints.add(5);
+            user.dBPoints.add(4);
+            user.dSAPoints.add(3);
+            user.springPoints.add(2);
     }
 
 }
