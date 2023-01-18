@@ -1,10 +1,13 @@
+import java.util.HashMap;
+
 public enum Commands {
     EXIT("exit", new Exit()),
     ADDSTUDENT("add students", new AddStudent()),
     LIST("list", new ListC()),
     ADDPOINTS("add points", new AddPoints()),
     FIND("find", new Find()),
-    STATISTICS("statistics", new Statistics())
+    STATISTICS("statistics", new Statistics()),
+    NOTIFY("notify", new Notify())
     ;
 
     String strCommand;
@@ -14,4 +17,6 @@ public enum Commands {
         this.command = classCommand;
 
     }
+
+
 }

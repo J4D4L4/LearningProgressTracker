@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public abstract class Command {
@@ -247,6 +244,7 @@ class Statistics extends Command {
     Statistics() {
         super("statistics");
     }
+
     void mainFunction(UserList userList) {
         String mPopular = userList.getMostPopular();
         String lPopular = userList.getLeastPopular();
@@ -254,48 +252,74 @@ class Statistics extends Command {
         String lActivity = userList.getLowesttActivity();
         String easiest = userList.getEasiest();
         String hardest = userList.getHardest();
-        if(mPopular.equals(lPopular)){
-            mPopular= "n/a";
+        if (mPopular.equals(lPopular)) {
+            mPopular = "n/a";
             lPopular = "n/a";
         }
-        if(hActivity.equals(lActivity)){
+        if (hActivity.equals(lActivity)) {
             hActivity = "n/a";
             lActivity = "n/a";
         }
 
-        if(easiest.equals(hardest)){
+        if (easiest.equals(hardest)) {
             easiest = "n/a";
-            hardest ="n/a";
+            hardest = "n/a";
         }
 
         System.out.println("Type the name of a course to see details or 'back' to quit:");
-        System.out.printf("Most popular: %s%n",userList.getMostPopular());
-        System.out.printf("Least popular: %s%n",userList.getLeastPopular());
-        System.out.printf("Highest activity: %s%n",userList.getHighestActivity());
-        System.out.printf("Lowest activity: %s%n",userList.getLowesttActivity());
-        System.out.printf("Easiest course: %s%n",userList.getEasiest());
-        System.out.printf("Hardest course: %s%n",userList.getHardest());
+        System.out.printf("Most popular: %s%n", userList.getMostPopular());
+        System.out.printf("Least popular: %s%n", userList.getLeastPopular());
+        System.out.printf("Highest activity: %s%n", userList.getHighestActivity());
+        System.out.printf("Lowest activity: %s%n", userList.getLowesttActivity());
+        System.out.printf("Easiest course: %s%n", userList.getEasiest());
+        System.out.printf("Hardest course: %s%n", userList.getHardest());
 
         Scanner scanner = new Scanner(System.in);
-        while(true){
+        while (true) {
             String in = scanner.nextLine().toLowerCase();
-            if(in.equals("java")||in.equals("dsa")||in.equals("databases")||in.equals("spring")){
-                getCourseStat(userList,in);
-            }
-            else if(in.equals("back")) break;
+            if (in.equals("java") || in.equals("dsa") || in.equals("databases") || in.equals("spring")) {
+                getCourseStat(userList, in);
+            } else if (in.equals("back")) break;
             else System.out.println("Unknown course.");
         }
 
 
     }
-    public void getCourseStat(UserList userList, String in){
+
+    public void getCourseStat(UserList userList, String in) {
         List<UserInTopList> statisticList = userList.getCourseStatistics(in);
-        System.out.println(in.substring(0,1).toUpperCase()+in.substring(1));
+        System.out.println(in.substring(0, 1).toUpperCase() + in.substring(1));
         System.out.println("id     points completed");
-        for(UserInTopList u : statisticList){
-            System.out.println(u.id+" "+u.points+"    "+u.completion+"%");
+        for (UserInTopList u : statisticList) {
+            System.out.println(u.id + " " + u.points + "    " + u.completion + "%");
         }
     }
-
-
 }
+
+    class Notify extends Command {
+        Notify() {
+            super("notify");
+        }
+
+        @Override
+        void mainFunction(UserList userList) {
+            sendNotify(userList);
+        }
+        public void sendNotify(UserList userList){
+            List<completionPair> completed = userList.getCompleted();
+            String lastUser="";
+            int counter=0;
+            for (completionPair i : completed){
+                if(!i.user.eMail.equals(lastUser)){
+                    lastUser = i.user.eMail;
+                    counter++;
+                }
+                String fullName = i.user.firstName+" "+i.user.lastName;
+
+                System.out.printf("To: %s%n",i.user.eMail);
+                System.out.printf("Re: Your Learning Progress%n");
+                System.out.printf("Hello, %s! You have accomplished our %s course!%n",fullName, i.course);
+            }
+            System.out.printf("Total %d students have been notified.%n",counter);
+        }
+    }

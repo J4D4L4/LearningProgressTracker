@@ -13,6 +13,10 @@ public class User {
     List<Integer> dSAPoints= new ArrayList<>();
     List<Integer> dBPoints = new ArrayList<>();
     List<Integer> springPoints = new ArrayList<>();
+    boolean notifiedJava =false;
+    boolean notifiesDSA = false;
+    boolean notifiedDB = false;
+    boolean notifiedSpring = false;
 
     User(String firstName, String lastName, String eMail){
 

@@ -47,7 +47,7 @@ public class CommandLineInterface {
          addPoints2(user1);
         addPoints2(user2);
         addPoints2(user3);
-        addPoints2(user4);
+        addPoints3(user4);
         userList.listOfUsers.put(user1.hashCode(),user1);
         System.out.println(user1.hashCode());
         userList.listOfUsers.put(user2.hashCode(),user2);
@@ -77,6 +77,12 @@ public class CommandLineInterface {
             user.dBPoints.add(4);
             user.dSAPoints.add(3);
             user.springPoints.add(2);
+    }
+    public void addPoints3(User user){
+        user.javaPoints.add(600);
+        user.dBPoints.add(400);
+        user.dSAPoints.add(500);
+        user.springPoints.add(500);
     }
 
 }

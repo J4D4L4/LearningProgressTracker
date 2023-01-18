@@ -1,9 +1,6 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 public class UserList {
     //List<User> listOfUsers = new ArrayList<User>();
@@ -314,4 +311,37 @@ public class UserList {
         return statisticList;
     }
 
+    List<completionPair> getCompleted(){
+        List<completionPair> completed= new ArrayList<>();
+        for (var u : listOfUsers.entrySet()){
+            if(u.getValue().getTotalJava()>=totalJava && u.getValue().notifiedJava==false) {
+                completed.add(new completionPair(u.getValue(), "Java"));
+                u.getValue().notifiedJava=true;
+            }
+            if(u.getValue().getTotalDB()>=totalDB && u.getValue().notifiedDB == false) {
+                completed.add(new completionPair(u.getValue(), "Database"));
+                u.getValue().notifiedDB = true;
+            }
+            if(u.getValue().getTotalDSA()>=totalDSA && u.getValue().notifiesDSA == false) {
+                completed.add(new completionPair(u.getValue(), "DSA"));
+                u.getValue().notifiesDSA = true;
+            }
+            if(u.getValue().getTotalDSA()>=totalSpring && u.getValue().notifiedSpring == false) {
+                completed.add(new completionPair(u.getValue(), "Spring"));
+                u.getValue().notifiedSpring = true;
+            }
+        }
+        return completed;
+
+    }
+
+}
+
+class completionPair{
+    String course;
+    User user;
+    completionPair( User u,String s){
+        this.course =s;
+        this.user=u;
+    }
 }
